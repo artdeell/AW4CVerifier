@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files("./mysql-connector-j-8.0.33.jar")
+    implementation 'io.undertow:undertow-core:2.3.5.Final'
+    implementation 'io.undertow:undertow-websockets-jsr:2.3.5.Final'
+    implementation 'org.json:json:20230227'
+    implementation 'net.dv8tion:JDA:5.0.0-beta.9'
+}
+
+jar {
+    manifest {
+        attributes("Main-Class" : "org.example.Main")
+    }
+    exclude "META-INF/INDEX.LIST"
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
+}
