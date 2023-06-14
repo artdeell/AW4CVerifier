@@ -3,10 +3,13 @@ package org.example.server;
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.util.Headers;
 import io.undertow.util.StatusCodes;
 import org.example.db.DbCreatorInterface;
 import org.example.db.DbQueryInterface;
+import org.example.patterns.PatternStorage;
 
+import java.nio.ByteBuffer;
 import java.util.Deque;
 import java.util.Map;
 
@@ -33,7 +36,11 @@ public class HttpServer{
             String user = params.get("user").getFirst();
             String key = queryInterface.getUserKey(user);
             if(key != null) {
-
+                exchange.setStatusCode(StatusCodes.OK);
+                byte[] responseData = PatternStorage.aw4c_accountclientserver_rel_pattern.getRollingBuffer();
+                exchange.setResponseContentLength(responseData.length);
+                exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/octet-stream");
+                exchange.getResponseSender().send(ByteBuffer.wrap(responseData));
             }else{
                 abort(exchange, StatusCodes.NOT_FOUND);
             }
@@ -79,10 +86,6 @@ public class HttpServer{
             e.printStackTrace();
             abort(exchange, StatusCodes.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    public void testKeyHandler() {
-
     }
 
 

@@ -1,10 +1,10 @@
 package org.example.botimpl.telegram;
 
 import org.example.Utils;
-import org.example.botimpl.BotConstants;
 import org.example.botimpl.Telegram;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.IOException;
 
 public class LongPoll implements Runnable {
@@ -38,14 +38,6 @@ public class LongPoll implements Runnable {
             offset = update.getLong("update_id")+1;
             longPollListener.handleUpdate(update);
         }
-
-    }
-
-    private void handleUpdate(JSONObject update) {
-        JSONObject message = update.optJSONObject("message");
-        if(message == null) return;
-        JSONObject from = message.getJSONObject("from");
-
 
     }
 }
