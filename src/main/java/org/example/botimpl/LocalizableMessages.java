@@ -37,9 +37,12 @@ public class LocalizableMessages {
         File localeDirectory = new File("./locales/");
         File[] localeFiles = localeDirectory.listFiles();
         if(localeFiles != null) {
+            System.out.println("Loading "+localeFiles.length+ " locales");
             for(File file : localeFiles) {
                 loadSingleLocale(file);
             }
+        }else{
+            System.out.println("Failed to list locales");
         }
     }
     private static void loadSingleLocale(File locale) {

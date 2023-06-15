@@ -69,7 +69,7 @@ public class Telegram implements LongPollListener {
         JSONObject from = message.getJSONObject("from");
         long userId = from.getLong("id");
         JSONObject chat = message.getJSONObject("chat");
-        long chatId = chat.getInt("id");
+        long chatId = chat.getLong("id");
         String userLocale = from.optString("language_code", "en");
         if(!chat.getString("type").equals("private")) {
             sendMessage(userLocale, chatId, LocalizableMessages.PRIVATE_CHAT_ONLY);
