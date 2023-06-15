@@ -14,7 +14,7 @@ public class Pattern {
         byte[] patternBytes = new byte[classic_chars.length()/4],
                 maskBytes = new byte[classic_marks.length()];
         for(int i = 0; i < patternBytes.length; i++) {
-            patternBytes[i] = Byte.parseByte(classic_chars.substring(i*4+2, i*4+4), 16);
+            patternBytes[i] = (byte)(Integer.parseInt(classic_chars.substring(i*4+2, i*4+4), 16) & 0xFF);
             maskBytes[i] = (byte) (classic_marks.charAt(i) == 'x' ? 1 : 0);
         }
         return new Pattern(patternBytes, maskBytes);

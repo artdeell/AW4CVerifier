@@ -18,9 +18,10 @@ public class HttpServer{
         Undertow.Builder builder = Undertow.builder();
         builder.addHttpListener(8690, "localhost");
         HttpServer server = new HttpServer();
-        builder.setHandler(Handlers.path()
-                .addExactPath("/enroll_key", server::enrollKeyHandler)
-                .addExactPath("/test", server::testKeyHandler)
+        builder.setHandler(
+                Handlers.path()
+                        .addExactPath("/aw4c-api/enroll_key", server::enrollKeyHandler)
+                        .addExactPath("/aw4c-api/test", server::testKeyHandler)
         );
         builder.setIoThreads(16);
         builder.build().start();
