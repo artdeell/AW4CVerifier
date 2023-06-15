@@ -10,6 +10,18 @@ public class Pattern {
     private final int bufferLength;
     private final int middle;
 
+    public static Pattern parsePatternM(String manual_chars, String manual_marks) {
+        String[] manual_char_array = manual_chars.split(" ");
+        String[] manual_mark_array = manual_marks.split(" ");
+        byte[] patternBytes = new byte[manual_char_array.length],
+                maskBytes = new byte[manual_mark_array.length];
+        for(int i = 0; i < patternBytes.length; i++) {
+            patternBytes[i] = (byte)(Integer.parseInt(manual_char_array[i], 16) & 0xFF);
+            maskBytes[i] = (byte) (manual_mark_array[i].charAt(0) == 'x' ? 1 : 0);
+        }
+        return new Pattern(patternBytes, maskBytes);
+    }
+
     public static Pattern parsePattern(String classic_chars, String classic_marks) {
         byte[] patternBytes = new byte[classic_chars.length()/4],
                 maskBytes = new byte[classic_marks.length()];
